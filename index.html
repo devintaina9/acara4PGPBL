@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Ionic App</title>
+
+  <base href="/" />
+
+  <meta name="color-scheme" content="light dark" />
+  <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="msapplication-tap-highlight" content="no" />
+
+  <link rel="icon" type="image/png" href="assets/icon/favicon.png" />
+
+  <link rel="stylesheet" href="https://js.arcgis.com/4.30/esri/themes/light/main.css">
+  <script src="https://js.arcgis.com/4.30/"></script>
+
+  <!-- add to homescreen for ios -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+</head>
+
+<body>
+  <div id="viewDiv" style="height: 100vh; width: 100%;"></div>
+
+  <!-- Dropdown for selecting basemap and Zoom buttons -->
+  <div style="position: absolute; top: 10px; left: 10px; z-index: 999; background-color: white; padding: 10px; border-radius: 5px;">
+    <label for="basemap-select" style="color: black; font-weight: bold;">Pilih Basemap:</label>
+    <select id="basemap-select" onchange="changeBasemap()">
+      <option value="streets">Streets</option>
+      <option value="satellite">Satellite</option>
+      <option value="hybrid">Hybrid</option>
+      <option value="topo">Topographic</option>
+      <option value="dark-gray">Dark Gray</option>
+      <option value="gray">Gray</option>
+      <option value="oceans">Oceans</option>
+    </select>
+
+    <!-- Zoom In and Zoom Out buttons -->
+    <div style="margin-top: 10px;">
+      <button onclick="zoomIn()" style="display: block; margin-bottom: 5px; font-size: 20px;">+</button>
+      <button onclick="zoomOut()" style="font-size: 20px;">-</button>
+    </div>
+  </div>
+
+  <script>
+    require(["esri/Map", "esri/views/MapView"], function (Map, MapView) {
+      // Initialize the map
+      var map = new Map({
+        basemap: "streets" // Default basemap
+      });
+
+      var view = new MapView({
+        container: "viewDiv", // Div ID to render the map
+        map: map,
+        zoom: 4,
+        center: [15, 65] // Initial map coordinates
+      });
+
+      // Function to change the basemap dynamically
+      window.changeBasemap = function () {
+        var basemapSelect = document.getElementById("basemap-select");
+        var selectedBasemap = basemapSelect.value;
+        map.basemap = selectedBasemap; // Update basemap
+      };
+
+      // Function to zoom in
+      window.zoomIn = function () {
+        view.zoom += 1; // Increase zoom level
+      };
+
+      // Function to zoom out
+      window.zoomOut = function () {
+        view.zoom -= 1; // Decrease zoom level
+      };
+    });
+  </script>
+
+</body>
+
+</html>
