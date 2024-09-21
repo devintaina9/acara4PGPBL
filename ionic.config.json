@@ -1,0 +1,7 @@
+{
+  "name": "MyMap",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
